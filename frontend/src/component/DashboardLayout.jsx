@@ -6,7 +6,7 @@ const DashboardLayout = ({ children }) => {
 
   return (
     <div>
-      <main className="flex h-[100dvh] overflow-hidden w-full"> lkjn
+      <main className="flex h-[100dvh] overflow-hidden w-full">
         <Sidebar
           isSidebarShow={isSidebarShow}
           setSidebarShow={setSidebarShow}
