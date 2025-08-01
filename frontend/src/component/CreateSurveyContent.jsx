@@ -5,18 +5,9 @@ import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import { useCreateSurveyProvider } from "./CreateSurveyProvider";
 
 const CreateSurveyContent = () => {
-  const { questions, setQuestions } = useCreateSurveyProvider();
+  const { questions, onDragEnd } = useCreateSurveyProvider();
   const [surveyContent, setSurveyContent] = useState(sidebarcontent);
 
-  const onDragEnd = (result) => {
-    if (!result.destination) {
-      return;
-    }
-    const items = Array.from(questions);
-    const [reorderedItem] = items.splice(result.source.index, 1);
-    items.splice(result.destination.index, 0, reorderedItem);
-    setQuestions(items);
-  };
   return (
     <div className="rounded-[20px] border-2 border-light-gray bg-white mt-3 flex flex-col  h-full sm:h-[calc(100vh-338px)] ">
       <div className="grow">

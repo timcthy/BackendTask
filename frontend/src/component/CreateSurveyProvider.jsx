@@ -7,17 +7,38 @@ export const CreateSurveyProviderMock = ({ children }) => {
   const [surveyTitle, setSurveyTitle] = useState("My Survey Title");
   const [surveyDescription, setSurveyDescription] = useState("This is a sample survey.");
   const [questions, setQuestions] = useState([
-    { id: 1, type: "short_text", saved: true },
-    { id: 2, type: "multiple_choice", saved: true },
+    { 
+      id: 1, 
+      type: "shortAnswer", 
+      title: "Sample Short Answer Question",
+      saved: true,
+      options: []
+    },
+    { 
+      id: 2, 
+      type: "multipleChoice", 
+      title: "Sample Multiple Choice Question",
+      saved: true,
+      options: [
+        { id: 1, text: "Option 1" },
+        { id: 2, text: "Option 2" },
+        { id: 3, text: "Option 3" }
+      ]
+    },
   ]);
   const [dupList, setDupList] = useState([]);
-  const defaultQuestionType = "short_text";
+  const defaultQuestionType = "shortAnswer";
 
   const addNewQuestion = (type = defaultQuestionType) => {
     const newQuestion = {
       id: Date.now(),
       type,
+      title: `New ${type} Question`,
       saved: false,
+      options: type === "multipleChoice" || type === "singleChoice" ? [
+        { id: Date.now(), text: "Option 1" },
+        { id: Date.now() + 1, text: "Option 2" }
+      ] : []
     };
     setQuestions((prev) => [...prev, newQuestion]);
   };
@@ -102,6 +123,16 @@ export const CreateSurveyProviderMock = ({ children }) => {
     });
   };
 
+  const onDragEnd = (result) => {
+    if (!result.destination) {
+      return;
+    }
+    const items = Array.from(questions);
+    const [reorderedItem] = items.splice(result.source.index, 1);
+    items.splice(result.destination.index, 0, reorderedItem);
+    setQuestions(items);
+  };
+
   const handleCreateSurvey = () => {
     console.log("Mock create survey:", {
       title: surveyTitle,
@@ -118,6 +149,7 @@ export const CreateSurveyProviderMock = ({ children }) => {
         surveyDescription,
         setSurveyDescription,
         questions,
+        setQuestions,
         defaultQuestionType,
         addNewQuestion,
         handleDeleteQuestion,
@@ -129,6 +161,7 @@ export const CreateSurveyProviderMock = ({ children }) => {
         handleEditQuestion,
         handleDuplicate,
         handleDeleteOption,
+        onDragEnd,
         dupList,
         handleCreateSurvey,
       }}

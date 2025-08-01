@@ -29,7 +29,7 @@ const QuestionItem = ({ question, index }) => {
   const renderOptions = (q, questionIndex) => {
     switch (q.type) {
       case "multipleChoice":
-        return q.options.map((option, optionIndex) => (
+        return (q.options || []).map((option, optionIndex) => (
           <RenderCheckboxOptions
             key={optionIndex}
             questionIndex={questionIndex}
@@ -40,7 +40,7 @@ const QuestionItem = ({ question, index }) => {
           />
         ));
       case "singleChoice":
-        return q.options.map((option, optionIndex) => (
+        return (q.options || []).map((option, optionIndex) => (
           <RenderMultipleOptions
             key={optionIndex}
             questionIndex={questionIndex}
