@@ -7,24 +7,6 @@ export const CreateSurveyProviderMock = ({ children }) => {
   const [surveyTitle, setSurveyTitle] = useState("My Survey Title");
   const [surveyDescription, setSurveyDescription] = useState("This is a sample survey.");
   const [questions, setQuestions] = useState([
-    { 
-      id: 1, 
-      type: "shortAnswer", 
-      title: "Sample Short Answer Question",
-      saved: true,
-      options: []
-    },
-    { 
-      id: 2, 
-      type: "multipleChoice", 
-      title: "Sample Multiple Choice Question",
-      saved: true,
-      options: [
-        { id: 1, text: "Option 1" },
-        { id: 2, text: "Option 2" },
-        { id: 3, text: "Option 3" }
-      ]
-    },
   ]);
   const [dupList, setDupList] = useState([]);
   const defaultQuestionType = "shortAnswer";
@@ -33,11 +15,11 @@ export const CreateSurveyProviderMock = ({ children }) => {
     const newQuestion = {
       id: Date.now(),
       type,
-      title: `New ${type} Question`,
+      title: "",
       saved: false,
       options: type === "multipleChoice" || type === "singleChoice" ? [
-        { id: Date.now(), text: "Option 1" },
-        { id: Date.now() + 1, text: "Option 2" }
+        { id: Date.now(), text: "" },
+        { id: Date.now() + 1, text: "" }
       ] : []
     };
     setQuestions((prev) => [...prev, newQuestion]);

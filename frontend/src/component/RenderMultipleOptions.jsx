@@ -36,8 +36,8 @@ const RenderMultipleOptions = ({
         whileFocus={{ boxShadow: "0 0 0 1px rgba(104, 81, 167, 0.1)" }}
         type="text"
         required
-        value={option}
-        placeholder={"mock_text"}
+        value={option.text}
+        placeholder="Enter option text..."
         disabled={question.saved}
         onChange={(e) =>
           handleOptionChange(questionIndex, optionIndex, e.target.value)

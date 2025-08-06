@@ -37,9 +37,9 @@ const CreateSurveySteps = ({ children, step }) => {
         </div>
       </div>
       <div className="flex justify-between items-center text-[13px] mt-1 font-switzer text-primary text-center">
-        <h3 className="text-center">{"mock_text"}</h3>
-        <h3 className="text-center pr-4">{"mock_text"}</h3>
-        <h3>{"mock_text"}</h3>
+        <h3 className="text-center">Design</h3>
+        <h3 className="text-center pr-4">Preview</h3>
+        <h3>Publish</h3>
       </div>
       <div className="mt-4">{children}</div>
     </div>

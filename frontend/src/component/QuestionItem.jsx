@@ -56,7 +56,7 @@ const QuestionItem = ({ question, index }) => {
             <textarea
               className="w-full h-24 p-3 bg-transparent border-none outline-none resize-none text-gray-600 placeholder-gray-400"
               disabled={true}
-              placeholder={"mock_text"}
+              placeholder="Enter your long answer here..."
               onChange={(e) => handleOptionChange(questionIndex, 0, e.target.value)}
             />
           </div>
@@ -67,7 +67,7 @@ const QuestionItem = ({ question, index }) => {
             <input
               className="w-full p-2 bg-transparent border-none outline-none text-gray-600 placeholder-gray-400"
               disabled={true}
-              placeholder={"mock_text"}
+              placeholder="Enter your short answer here..."
               onChange={(e) => handleOptionChange(questionIndex, 0, e.target.value)}
             />
           </div>
@@ -203,7 +203,7 @@ const QuestionItem = ({ question, index }) => {
                 type="text"
                 required
                 value={question.title}
-                placeholder={"mock_text"}
+                placeholder="Enter your question here..."
                 onChange={(e) => handleTitleChange(index, e.target.value)}
                 className="px-2 py-1.5 text-gray-800 outline-none font-normal text-base sm:col-span-8 bg-transparent border border-gray-200 rounded-lg focus:ring-1 focus:ring-[#6851a7] focus:border-transparent transition-all duration-200"
               />
@@ -218,19 +218,19 @@ const QuestionItem = ({ question, index }) => {
                     className="cursor-pointer text-sm px-2 py-1.5 border border-[#6851a7] rounded-lg bg-white appearance-none focus:outline-none focus:ring-1 focus:ring-[#6851a7] focus:border-transparent transition-all duration-200 text-gray-700 w-full pr-8"
                   >
                     <option value="singleChoice">
-                      {"mock_text"}
+                      Single Choice
                     </option>
                     <option value="multipleChoice">
-                      {"mock_text"}
+                      Multiple Choice
                     </option>
                     <option value="openQuestion">
-                      {"mock_text"}
+                      Long Answer
                     </option>
                     <option value="shortAnswer">
-                      {"mock_text"}
+                      Short Answer
                     </option>
-                    <option value="scale">{"mock_text"}</option>
-                    <option value="npsScore">{"mock_text"}</option>
+                    <option value="scale">Ratings</option>
+                    <option value="npsScore">NPS Score</option>
                   </motion.select>
                   <div className="absolute right-2 top-1/2 transform -translate-y-1/2 pointer-events-none">
                     <SelectArrowIcon width={14} height={14} />
@@ -274,7 +274,7 @@ const QuestionItem = ({ question, index }) => {
                       onClick={() => handleAddOption(index)}
                       className={`mt-5 disabled:opacity-70 bg-[#6851a7] hover:bg-[#5b4691] text-white py-2 px-4 rounded-full font-medium transition-all duration-200`}
                     >
-                      {"mock_text"}
+                      Add Option
                     </button>
                   )}
                 </div>
@@ -295,7 +295,7 @@ const QuestionItem = ({ question, index }) => {
                         whileHover={{ scale: 1.05, backgroundColor: "rgba(239, 68, 68, 0.1)" }}
                         whileTap={{ scale: 0.97 }}
                         data-tooltip-id="delete-btn"
-                        data-tooltip-content={"mock_text"}
+                        data-tooltip-content="Delete Question"
                         data-tooltip-place="top"
                         onClick={() => handleDeleteQuestion(index)}
                         type="button"
@@ -309,7 +309,7 @@ const QuestionItem = ({ question, index }) => {
                         whileHover={{ scale: 1.05, backgroundColor: "rgba(104, 81, 167, 0.1)" }}
                         whileTap={{ scale: 0.97 }}
                         data-tooltip-id="copy-btn"
-                        data-tooltip-content={"mock_text"}
+                        data-tooltip-content="Duplicate Question"
                         data-tooltip-place="top"
                         type="button"
                         onClick={() => handleDuplicate(index)}
@@ -331,7 +331,7 @@ const QuestionItem = ({ question, index }) => {
                         : "bg-[#6851a7] hover:bg-[#5b4691]"
                     }`}
                   >
-                    {"mock_text"}
+                    Save Question
                   </motion.button>
                 </>
               )}
@@ -343,7 +343,7 @@ const QuestionItem = ({ question, index }) => {
                     whileHover={{ scale: 1.05, backgroundColor: "rgba(239, 68, 68, 0.1)" }}
                     whileTap={{ scale: 0.97 }}
                     data-tooltip-id="delete-saved-btn"
-                    data-tooltip-content={"mock_text"}
+                    data-tooltip-content="Delete Question"
                     data-tooltip-place="top"
                     onClick={() => handleDeleteQuestion(index)}
                     type="button"
@@ -357,7 +357,7 @@ const QuestionItem = ({ question, index }) => {
                     whileHover={{ scale: 1.05, backgroundColor: "rgba(104, 81, 167, 0.1)" }}
                     whileTap={{ scale: 0.97 }}
                     data-tooltip-id="edit-btn"
-                    data-tooltip-content={"mock_text"}
+                    data-tooltip-content="Edit Question"
                     data-tooltip-place="top"
                     onClick={() => handleEditQuestion(index)}
                     className="p-2 rounded-full hover:bg-purple-50 transition-all duration-200"

@@ -39,9 +39,9 @@ const RenderCheckboxOptions = ({
       <motion.input
         whileFocus={{ boxShadow: "0 0 0 1px rgba(104, 81, 167, 0.1)" }}
         type="text"
-        value={option}
+        value={option.text}
         required
-        placeholder={"mock_text"}
+        placeholder="Enter option text..."
         disabled={question.saved}
         onChange={(e) =>
           handleOptionChange(questionIndex, optionIndex, e.target.value)

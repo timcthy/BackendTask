@@ -12,7 +12,7 @@ const CreateSurveyContent = () => {
     <div className="rounded-[20px] border-2 border-light-gray bg-white mt-3 flex flex-col  h-full sm:h-[calc(100vh-338px)] ">
       <div className="grow">
         <h3 className="auth-sub-heading text-primary font-medium border-b-2 border-light-gray p-3 w-full text-base ">
-         {"mock_text"}
+         Survey Questions
         </h3>
       </div>
       <div className="overflow-auto h-full scrollbar-style min-h-[84px] max-h-[200px]  sm:max-h-full">
