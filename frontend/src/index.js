@@ -5,7 +5,5 @@ import "./index.css"; // Optional if you use Tailwind or global styles
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <React.StrictMode>
     <App />
-  </React.StrictMode>
 );
