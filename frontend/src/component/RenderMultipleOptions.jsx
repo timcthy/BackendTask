@@ -17,7 +17,7 @@ const RenderMultipleOptions = ({
       initial={{ opacity: 0.9 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.2, delay: optionIndex * 0.03 }}
-      key={optionIndex} 
+      key={option.id} 
       className="flex my-3 gap-3 mb-4 items-center"
     >
       <div className="relative flex items-center justify-center">
@@ -58,7 +58,7 @@ const RenderMultipleOptions = ({
           className="w-[32px] h-[32px] cursor-pointer flex justify-center items-center rounded-full hover:bg-red-50 transition-all duration-200"
           disabled={question.saved}
           type="button"
-          onClick={() => handleDeleteOption(questionIndex, optionIndex)}
+          onClick={() => handleDeleteOption(questionIndex, option.id)}
         >
           <XIcon className="text-red-500" />
         </motion.button>

@@ -13,7 +13,7 @@ const RenderCheckboxOptions = ({
   const { handleOptionChange, handleDeleteOption } = useCreateSurveyProvider();
 
   const handleDeleteClick = () => {
-    handleDeleteOption(questionIndex, optionIndex);
+    handleDeleteOption(questionIndex, option.id);
   };
 
   return (
@@ -21,7 +21,7 @@ const RenderCheckboxOptions = ({
       initial={{ opacity: 0.9 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.2, delay: optionIndex * 0.03 }}
-      key={optionIndex} 
+      key={option.id} 
       className="flex my-3 gap-3 mb-4 items-center"
     >
       <div className="relative flex items-center justify-center">

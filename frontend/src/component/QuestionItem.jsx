@@ -31,7 +31,7 @@ const QuestionItem = ({ question, index }) => {
       case "multipleChoice":
         return (q.options || []).map((option, optionIndex) => (
           <RenderCheckboxOptions
-            key={optionIndex}
+            key={option.id}
             questionIndex={questionIndex}
             question={q}
             option={option}
@@ -42,7 +42,7 @@ const QuestionItem = ({ question, index }) => {
       case "singleChoice":
         return (q.options || []).map((option, optionIndex) => (
           <RenderMultipleOptions
-            key={optionIndex}
+            key={option.id}
             questionIndex={questionIndex}
             question={q}
             option={option}
@@ -254,9 +254,10 @@ const QuestionItem = ({ question, index }) => {
                     >
                       {question.type === "singleChoice" ? "Single Choice" :
                        question.type === "multipleChoice" ? "Multiple Choice" :
-                       question.type === "openQuestion" ? "Long Question" :
-                       question.type === "shortAnswer" ? "Scale Question" :
-                       question.type === "Scale" ? "Scale" : "NPS"}
+                       question.type === "openQuestion" ? "Long Answer" :
+                       question.type === "shortAnswer" ? "Short Answer" :
+                       question.type === "scale" ? "Rating Scale" : 
+                       question.type === "npsScore" ? "NPS Score" : "Unknown"}
                     </motion.span>
                   </div>
                 )
@@ -271,10 +272,15 @@ const QuestionItem = ({ question, index }) => {
                     <button
                       disabled={question.saved}
                       type="button"
-                      onClick={() => handleAddOption(index)}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        console.log('Add Option button clicked for question:', index);
+                        handleAddOption(index);
+                      }}
                       className={`mt-5 disabled:opacity-70 bg-[#6851a7] hover:bg-[#5b4691] text-white py-2 px-4 rounded-full font-medium transition-all duration-200`}
                     >
-                      Add Option
+                      Add Option (Q{index})
                     </button>
                   )}
                 </div>
