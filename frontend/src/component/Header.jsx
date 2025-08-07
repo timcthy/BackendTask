@@ -8,10 +8,7 @@ const isHeadingElement = (el) =>
 const Header = ({ children }) => {
   return (
     <header className="flex flex-col lg:flex-row justify-between pl-3 lg:pl-6 3xl:pl-8 pr-3 pt-3 pb-5 sm:py-3">
-      {/*
-        If the child is already a heading (<h1>…<h6>), render it directly to avoid nesting.
-        Otherwise, wrap in an h3.
-      */}
+
       {isHeadingElement(children) ? (
         children
       ) : (

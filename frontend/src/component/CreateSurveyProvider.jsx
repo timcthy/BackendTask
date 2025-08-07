@@ -1,6 +1,5 @@
 import React, { createContext, useContext, useState, useRef, useCallback } from "react";
 
-// Create the context
 const CreateSurveyContext = createContext();
 
 export const CreateSurveyProviderMock = ({ children }) => {
