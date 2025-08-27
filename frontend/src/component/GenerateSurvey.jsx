@@ -2,7 +2,7 @@ import React from "react";
 import { useCreateSurveyProvider } from "./CreateSurveyProvider";
 
 const GenerateSurvey = () => {
-    const { setQuestions } = useCreateSurveyProvider();
+    const { setSurveyDescription, setQuestions } = useCreateSurveyProvider();
 
     const handleGenerate = async () => {
         const description = prompt("Enter a short survey description:");
@@ -24,16 +24,16 @@ const GenerateSurvey = () => {
 
             const survey = await res.json();
 
-
             const formattedQuestions = survey.questions.map((q) => ({
                 id: q.id,
                 title: q.text,
                 type:
-                    q.type === "multipleChoice"
-                        ? "multipleChoice"
-                        : q.type === "scale"
-                        ? "scale"
-                        : "openQuestion",
+                    q.type === "multipleChoice" ? "multipleChoice"
+                    : q.type === "singleChoice" ? "singleChoice"
+                    : q.type === "openQuestion" ? "openQuestion"
+                    : q.type === "shortAnswer" ? "shortAnswer"
+                    : q.type === "scale" ? "scale"
+                    : "npsScore",
                 options: q.options.map((o, idx) => ({
                     id: `${q.id}-option-${idx}`,
                     text: o,
@@ -42,6 +42,10 @@ const GenerateSurvey = () => {
                 isTag: false,
             }));
 
+            console.log(description);
+            console.log(formattedQuestions);
+
+            setSurveyDescription(description);
             setQuestions(formattedQuestions);
         } catch (err) {
             console.error(err);

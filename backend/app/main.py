@@ -4,6 +4,12 @@ from pydantic import BaseModel
 from typing import List
 import uuid
 
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+api_key = os.environ.get("API_KEY")
+
 app = FastAPI()
 
 
@@ -13,7 +19,7 @@ origins = [
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"]
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -44,28 +50,34 @@ def generate_survey(request: GenerateSurveyRequest):
 
     # generate a mocked survey JSON
     survey = {
-        "title": f"{desc[:50]} Survey",
-        "questions": [
-            {
-                "id": str(uuid.uuid4()),
-                "type": "multipleChoice",
-                "text": "How satisfied are you with our service?",
-                "options": ["Very satisfied", "Satisfied", "Neutral", "Dissatisfied", "Very dissatisfied"]
-            },
-            {
-                "id": str(uuid.uuid4()),
-                "type": "scale",
-                "text": "Rate your overall experience",
-                "options": [str(i) for i in range(1, 11)]
-            },
-            {
-                "id": str(uuid.uuid4()),
-                "type": "openQuestion",
-                "text": "What can we improve?",
-                "options": []
-            }
-        ]
-    }
+                 "title": "Customer Experience Survey",
+                 "questions": [
+                     {
+                         "id": str(uuid.uuid4()),
+                         "type": "multipleChoice",
+                         "text": "Which of the following products have you used?",
+                         "options": ["Product A", "Product B", "Product C", "Product D"]
+                     },
+                     {
+                         "id": str(uuid.uuid4()),
+                         "type": "shortAnswer",
+                         "text": "What do you like most about our service?",
+                         "options": []
+                     },
+                     {
+                         "id": str(uuid.uuid4()),
+                         "type": "scale",
+                         "text": "Rate your overall satisfaction with our support team",
+                         "options": [str(i) for i in range(1, 11)]
+                     },
+                     {
+                         "id": str(uuid.uuid4()),
+                         "type": "openQuestion",
+                         "text": "Any additional comments or suggestions?",
+                         "options": []
+                     }
+                 ]
+             }
 
     # Save to mocked DB
     mocked_db[desc] = survey
