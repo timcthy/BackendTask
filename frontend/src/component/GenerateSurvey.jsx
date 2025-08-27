@@ -24,7 +24,7 @@ const GenerateSurvey = () => {
 
             const survey = await res.json();
 
-            
+
             const formattedQuestions = survey.questions.map((q) => ({
                 id: q.id,
                 title: q.text,
