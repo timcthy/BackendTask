@@ -30,7 +30,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Mocked in-memory storage
+# Mock in-memory storage
 mocked_db = {}
 
 # Uses prompt to create randomize JSON data that fits the app structure
