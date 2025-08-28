@@ -2,7 +2,7 @@ import React from "react";
 import { useCreateSurveyProvider } from "./CreateSurveyProvider";
 
 const GenerateSurvey = () => {
-    const { setSurveyDescription, setQuestions } = useCreateSurveyProvider();
+    const { setSurveyTitle, setSurveyDescription, setQuestions } = useCreateSurveyProvider();
 
     const handleGenerate = async () => {
         const description = prompt("Enter a short survey description:");
@@ -42,9 +42,11 @@ const GenerateSurvey = () => {
                 isTag: false,
             }));
 
+            console.log(survey.title)
             console.log(description);
             console.log(formattedQuestions);
 
+            setSurveyTitle(survey.title);
             setSurveyDescription(description);
             setQuestions(formattedQuestions);
         } catch (err) {

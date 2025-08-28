@@ -3,12 +3,14 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List
 import uuid
+import json
 
+from google import genai
 import os
 from dotenv import load_dotenv
 
 load_dotenv()
-api_key = os.environ.get("API_KEY")
+client = genai.Client()
 
 app = FastAPI()
 
@@ -48,38 +50,54 @@ class SurveyResponse(BaseModel):
 def generate_survey(request: GenerateSurveyRequest):
     desc = request.description.strip()
 
-    # generate a mocked survey JSON
-    survey = {
-                 "title": "Customer Experience Survey",
-                 "questions": [
-                     {
-                         "id": str(uuid.uuid4()),
-                         "type": "multipleChoice",
-                         "text": "Which of the following products have you used?",
-                         "options": ["Product A", "Product B", "Product C", "Product D"]
-                     },
-                     {
-                         "id": str(uuid.uuid4()),
-                         "type": "shortAnswer",
-                         "text": "What do you like most about our service?",
-                         "options": []
-                     },
-                     {
-                         "id": str(uuid.uuid4()),
-                         "type": "scale",
-                         "text": "Rate your overall satisfaction with our support team",
-                         "options": [str(i) for i in range(1, 11)]
-                     },
-                     {
-                         "id": str(uuid.uuid4()),
-                         "type": "openQuestion",
-                         "text": "Any additional comments or suggestions?",
-                         "options": []
-                     }
-                 ]
-             }
+    prompt = """
+        Generate a survey JSON object based on the following rules:
 
-    # Save to mocked DB
+        Requirements:
+
+        1. The survey must have at least 3 questions.
+        2. Question types should be randomized from the following:
+           - "multipleChoice": a question with a list of text options. Must include an "options" array with at least 2 items.
+           - "singleChoice": a question with a list of text options. Must include an "options" array with at least 2 items.
+           - "openQuestion": a long-answer question. "options" should be an empty array.
+           - "shortAnswer": a short-answer question. "options" should be an empty array.
+           - "scale": a rating question from 1 to 10. "options" should be an array of strings "1" through "10".
+           - "npsScore": a Net Promoter Score question from 0 to 10. "options" should be an array of strings "0" through "10".
+
+        3. Every question must have a unique id in UUID format.
+
+        4. The output JSON structure should be exactly like this:
+
+        {
+          "title": "<survey title>",
+          "questions": [
+              {
+                  "id": "<unique UUID>",
+                  "type": "<question type>",
+                  "text": "<question text>",
+                  "options": ["<option1>", "<option2>", ...]
+              }
+          ]
+        }
+
+        5. Randomize both the question types and the question texts/options for each generated survey.
+
+        Generate only the JSON object but make it a string, no extra explanation.
+    """
+
+    response = client.models.generate_content(
+        model="gemini-2.0-flash", contents = prompt
+    )
+
+    clean_text = response.text.strip()
+    if clean_text.startswith("```json"):
+        clean_text = clean_text[len("```json"):].strip()
+    if clean_text.endswith("```"):
+        clean_text = clean_text[:-3].strip()
+
+
+
+    survey = json.loads(clean_text)
     mocked_db[desc] = survey
 
     return survey
