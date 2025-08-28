@@ -8,16 +8,20 @@ import uuid, json, os
 
 from google import genai
 from dotenv import load_dotenv
-load_dotenv()
-client = genai.Client()
 
+# Load environment variables from .env file
+load_dotenv()
+# Initializes the Google Gemini GenAI client
+client = genai.Client()
+# Initializes FastAPI app
 app = FastAPI()
 
-
+# Configure CORS (Cross-Origin Resource Sharing)
 origins = [
     "http://localhost:3000",
 ]
 
+# Allows permissions
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -29,7 +33,7 @@ app.add_middleware(
 # Mocked in-memory storage
 mocked_db = {}
 
-
+# Uses prompt to create randomize JSON data that fits the app structure
 @app.post("/api/surveys/generate", response_model=SurveyResponse)
 def generate_survey(request: GenerateSurveyRequest, db: Session = Depends(get_db)):
     desc = request.description.strip()
@@ -69,19 +73,21 @@ def generate_survey(request: GenerateSurveyRequest, db: Session = Depends(get_db
         Generate only the JSON object but make it a string, no extra explanation.
     """
 
+    # Generates survey content using Gemini
     response = client.models.generate_content(
         model="gemini-2.0-flash", contents = prompt
     )
 
+    # Cleans the AI response to remove any markdown-style code blocks
     clean_text = response.text.strip()
     if clean_text.startswith("```json"):
         clean_text = clean_text[len("```json"):].strip()
     if clean_text.endswith("```"):
         clean_text = clean_text[:-3].strip()
 
-
-
+    # Converts the clean string to a python dictionary
     survey = json.loads(clean_text)
+    # Saves survey to database
     #save_survey(db, desc, survey)
 
     return survey
