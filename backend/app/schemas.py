@@ -1,13 +1,15 @@
 from pydantic import BaseModel
-from typing import List, Dict
+from typing import List
 
-class Question(BaseModel):
+class GenerateSurveyRequest(BaseModel):
+    description: str
+
+class SurveyQuestion(BaseModel):
+    id: str
     type: str
     text: str
-
-class SurveyCreate(BaseModel):
-    description: str
+    options: List[str] = []
 
 class SurveyResponse(BaseModel):
     title: str
-    questions: List[Question]
+    questions: List[SurveyQuestion]

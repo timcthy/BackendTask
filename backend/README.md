@@ -11,10 +11,10 @@ This is a FastAPI-based backend service that provides a survey-generation API. I
 
 ## Quickstart
 
-1. Install FastAPI and uvicorn:
+1. Install dependencies:
 
    ```bash
-   python3 -m pip install fastapi uvicorn
+   python3 -m pip install fastapi uvicorn sqlalchemy psycopg2-binary
    ```
 
 2. Start FastAPI server

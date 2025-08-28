@@ -1,14 +1,13 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Depends
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
-from typing import List
-import uuid
-import json
+from sqlalchemy.orm import Session
+from .schemas import GenerateSurveyRequest, SurveyResponse
+from .database import get_db
+from .services import save_survey, get_survey_by_description
+import uuid, json, os
 
 from google import genai
-import os
 from dotenv import load_dotenv
-
 load_dotenv()
 client = genai.Client()
 
@@ -30,24 +29,9 @@ app.add_middleware(
 # Mocked in-memory storage
 mocked_db = {}
 
-# Request schema
-class GenerateSurveyRequest(BaseModel):
-    description: str
-
-# Survey schema
-class SurveyQuestion(BaseModel):
-    id: str
-    type: str
-    text: str
-    options: List[str] = []
-
-class SurveyResponse(BaseModel):
-    title: str
-    questions: List[SurveyQuestion]
-
 
 @app.post("/api/surveys/generate", response_model=SurveyResponse)
-def generate_survey(request: GenerateSurveyRequest):
+def generate_survey(request: GenerateSurveyRequest, db: Session = Depends(get_db)):
     desc = request.description.strip()
 
     prompt = """
@@ -55,7 +39,7 @@ def generate_survey(request: GenerateSurveyRequest):
 
         Requirements:
 
-        1. The survey must have at least 3 questions.
+        1. Generate a random survey title. The survey must have at least 3 questions.
         2. Question types should be randomized from the following:
            - "multipleChoice": a question with a list of text options. Must include an "options" array with at least 2 items.
            - "singleChoice": a question with a list of text options. Must include an "options" array with at least 2 items.
@@ -98,6 +82,6 @@ def generate_survey(request: GenerateSurveyRequest):
 
 
     survey = json.loads(clean_text)
-    mocked_db[desc] = survey
+    #save_survey(db, desc, survey)
 
     return survey
